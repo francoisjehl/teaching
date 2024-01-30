@@ -1,23 +1,18 @@
 # Module 1
 
-# Exercise 1: Your own key-value store
+# Exercise 1: How Postgres stores pages
 
-1. Create a bash script named `mydb.sh`. This script accepts three parameters, `make`, `set` and `get`:
-    1.  `./mydb.sh make [database]` creates a `database` (actually an empty file in the current directory with the name supplied)
-        - 💡 you could use `touch`
-    2.  `./mydb.sh set [database] [key] [value]` inserts a record with the supplied `key` and `value` and stores it on a line in the `database` file
-        - 💡 you should use `>>`
-    3.  `./mydb.sh get [database] [key]` returns the current record with the supplied `key` in the `database`. If multiple records exist with the same key, it should only return the **last one**. If none exist, it should return `NULL`
-        - 💡 you should use `grep`, `sed` and `tail`
-2. Insert some records in a database and check the functionality
-    - What is the worst-case complexity of each operation? 
-    - Explain.
-3. Implement a new endpoint: `./mydb.sh del [database] [key]` that deletes the record with the supplied `key` in the `database` so it will appear as `NULL` the next time you `get` it.
-    - What could be at least two different approaches to implement this?
-        - 💡do you **really** need to **actually** delete the data?
-    - What would be their performance characteristics?
-4. Benchmark your implementation in terms of average operations per sec for get, set and del
-    - 💡you can use commands such as `openssl rand -hex 16` to generate random strings
+1. Create a database
+2. Create a table containing only one `VARCHAR` column, insert `'Hello World!'` in this table.
+    - 💡 do not forget to `CHECKPOINT`!
+3. Query the `pg_database` table to find the OID (Object Identifier) of your database
+4. Exec into your database container. Go to `/var/lib/postgresql/data/base/` and find the folder containing your database. What is inside?
+5. Find the file for your table using `pg_relation_filepath()`. Use the `du -sb` command to check its size in bits. What is this size? Why?
+6. Install `hexdump` in the container using `apt update && apt install bsdmainutils`
+7. Run `hexdump -C` on your table file. What do you see?
+8. Insert another value in the table. Check again.
+    - 💡 do not forget to `CHECKPOINT`!
+9. Same question with a `NULL` value
+10. Now delete the whole table and check again. What is happening? How could you fix this?
 
-
-# Exercise 2: Setup your development environment
+You can look at https://www.postgresql.org/docs/current/storage-page-layout.html if you want to know more about the storage layout.

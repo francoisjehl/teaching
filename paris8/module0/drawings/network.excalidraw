@@ -73,7 +73,7 @@
       "containerId": "ez_36pGp65U-bS6UN_Zga",
       "originalText": "Invoice\n#Address\n- ClientName",
       "lineHeight": 1.25,
-      "baseline": 57
+      "baseline": 56
     },
     {
       "type": "rectangle",
@@ -153,7 +153,7 @@
       "containerId": "ghZ4BBiYsHfv4NZNeP3RY",
       "originalText": "Invoice Line\n#Address\n- Qty\n- Amount",
       "lineHeight": 1.25,
-      "baseline": 77
+      "baseline": 76
     },
     {
       "type": "rectangle",
@@ -225,7 +225,7 @@
       "containerId": "oeMW_nKLYf4dcCr1cjXNC",
       "originalText": "Product\n#Address\n- Name",
       "lineHeight": 1.25,
-      "baseline": 57
+      "baseline": 56
     },
     {
       "type": "rectangle",
@@ -741,8 +741,8 @@
     },
     {
       "type": "text",
-      "version": 75,
-      "versionNonce": 593766614,
+      "version": 76,
+      "versionNonce": 1216392816,
       "isDeleted": false,
       "id": "j86kY_shdRynjLGzKCTER",
       "fillStyle": "solid",
@@ -762,7 +762,7 @@
       "frameId": null,
       "roundness": null,
       "boundElements": [],
-      "updated": 1706456648735,
+      "updated": 1706562796754,
       "link": null,
       "locked": false,
       "fontSize": 11.51809842147315,
@@ -777,8 +777,8 @@
     },
     {
       "type": "text",
-      "version": 123,
-      "versionNonce": 1391458186,
+      "version": 124,
+      "versionNonce": 2147201168,
       "isDeleted": false,
       "id": "16avpCXISEjgH8jF3N0ji",
       "fillStyle": "solid",
@@ -798,7 +798,7 @@
       "frameId": null,
       "roundness": null,
       "boundElements": [],
-      "updated": 1706456648735,
+      "updated": 1706562796754,
       "link": null,
       "locked": false,
       "fontSize": 11.51809842147315,
