@@ -1,8 +1,8 @@
 # Module 1
 
-# Exercise 1: How Postgres stores pages
+# Exercise 1: PosgtreSQL Pages
 
-1. Create a database
+1. Connect to your instance with **pgadmin** and create a database
 2. Create a table containing only one `VARCHAR` column, insert `'Hello World!'` in this table.
     - 💡 do not forget to `CHECKPOINT`!
 3. Query the `pg_database` table to find the OID (Object Identifier) of your database
@@ -15,4 +15,32 @@
 9. Same question with a `NULL` value
 10. Now delete the whole table and check again. What is happening? How could you fix this?
 
-You can look at https://www.postgresql.org/docs/current/storage-page-layout.html if you want to know more about the storage layout.
+# Exercise 2: Statistics
+1. Connect to your instance with **pgadmin** and create a database or use an existing one
+2. Create a table. Insert many records in the table using the `generate_series()` function.
+3. Check the estimated cardinality of your table with 
+
+```SELECT reltuples AS estimate FROM pg_class where relname = '<your_table>';```
+
+4. Check the collected statistics in the `pg_stats` table
+5. Run `ANALYZE <your_table>`
+6. Check again the previous queries. Try again the entire flow to see how often things are updated.
+
+## Questions
+- What is the purpose of the `ANALYZE` command?
+- What is inside `pg_stats`? How does this help for query execution?
+
+# Exercise 3: The Write-Ahead Log (WAL)
+
+1. Connect to your instance with **pgadmin** and create a database or use an existing one
+2. Install the extension `pg_walinspect` with `CREATE EXTENSION`
+3. Create a table of any structure
+4. Write down the current LSN with `SELECT pg_current_wal_lsn()`
+5. Interact with your table: insert a few lines for example.
+6. Note the new LSN with `SELECT pg_current_wal_lsn()`
+7. Use the `pg_get_wal_records_info()` function to get all the WAL records between the two LSNs you noted.
+8. Try different operations (insertions, deletions, updates). 
+
+## Questions
+
+- Describe the output of the `pg_get_wal_records_info()` function. What information does it extract from the WAL?
