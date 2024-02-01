@@ -38,7 +38,7 @@ style: |
 ---
 <!-- _class: lead -->
 # **Module 1**
-Storing Data
+Storing Data Safely
 
 ---
 # **Numbers any engineer should know**
@@ -240,11 +240,6 @@ Some locks are compatible with each other.
 Locks limit the **concurrency**
 
 ---
-# **Locks**
-
-Locks can use pessimistic locking or p
-
----
 # **MVCC**
 
 Every operation operates on a **snapshot** of the database
@@ -263,3 +258,10 @@ Tuples are not modified in **place**
 - `READ_COMMITTED` is the default
 - `READ_UNCOMMITTED` does not really exist
 🙋 Why?
+
+---
+## **Recap**
+
+- We looked at how PostgreSQL **stores data on disk**
+- We saw that it uses a **log** named the **WAL** to ensure atomicity and durability
+- Isolation is provided by **transactions** that have different isolation levels

@@ -165,14 +165,40 @@ Stonebraker comes back to Berkeley to start a new project named **Postgres**
 ---
 # **The "Internet Era" changes everything**
 
-Data volumes **explode**
+Data volumes **explode** in the early 2000s
+
+**Big Tech giants** start to look for other ways to manage data 
+
+---
+# **BigTable**
+
+![bg right:33%](assets/dean.jpg)
+**Jeff Dean** from **Google** published  _Bigtable: A Distributed Storage System for Structured Data_ in 2006
+
+---
+# **Dynamo**
+
+**Amazon** published _Dynamo: Amazon’s Highly Available Key-value Store_  in 2007
+It was meant to replace **Oracle** there
+
+>About 70 percent of operations were of the key-value kind, where only a primary key was used and a single row would be returned. About 20 percent would return a set of rows, but still operate on only a single table.
+>
+>**Werner Vogels**
+---
+# **Dynamo-style databases**
+
+e.g. **Cassandra**
+
+- All nodes are equal and there is no leader
+- Consistent hashing is used to ensure distribution
+- Data is replicated at least once
 
 ---
 # **MapReduce**
 
 ![bg right:33%](assets/dean.jpg)
 
-**Jeff Dean** published _MapReduce: Simplified Data Processing on Large Clusters_ in 2004
+**Jeff Dean** - him again ! -published _MapReduce: Simplified Data Processing on Large Clusters_ in 2004
 
  **MapReduce** is a programming model using two functions
 ```

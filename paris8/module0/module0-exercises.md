@@ -19,11 +19,17 @@
 4. Implement a `./mykv.sh get [table] cleanup` that performs the actual deletion of data that is **marked** as deleted 
 5. Benchmark your implementation in terms of **average operations per second** for get, set and del
     - 💡you can use commands such as `openssl rand -hex 16` to generate random strings
-6. Add a `sync -d` call after every write (using `&&`) to the file in the `set` code path to ensure **durability**
+6. **Advanced** Add a `sync -d` call after every write (using `&&`) to the file in the `set` code path to ensure **durability**
     - Read the `man sync`. Why does this help ensure durability?
     - Re-run your benchmarks. What do you see?
     - What do you think you should do to mitigate this?
-7. **Advanced** you may now want to ensure that only one process can write to a table at the same time. Read about the `flock` syscall/utility and how you could use it guarantee this. Implement this in your routines.
+7. **Advanced** You may now want to ensure that only one process can write to a table at the same time. Read about the `flock` syscall/utility and how you could use it guarantee this. Implement this in your routines. You may use a syntax that looks like the following for get, and a `-x` for `set`
+```
+(
+    flock -s 42 && commands_executed_under_lock
+) 42>/var/lock/mylock
+
+```
 
 # Exercise 2: Are you still good at SQL?
 

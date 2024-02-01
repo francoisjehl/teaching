@@ -1,10 +1,11 @@
 # Module 1
 
-# Exercise 1: PosgtreSQL Pages
+# Exercise 1: A look at PostgreSQL pages
 
 1. Connect to your instance with **pgadmin** and create a database
 2. Create a table containing only one `VARCHAR` column, insert `'Hello World!'` in this table.
     - 💡 do not forget to `CHECKPOINT`!
+    - What did this achieve?
 3. Query the `pg_database` table to find the OID (Object Identifier) of your database
 4. Exec into your database container. Go to `/var/lib/postgresql/data/base/` and find the folder containing your database. What is inside?
 5. Find the file for your table using `pg_relation_filepath()`. Use the `du -sb` command to check its size in bits. What is this size? Why?
@@ -15,22 +16,7 @@
 9. Same question with a `NULL` value
 10. Now delete the whole table and check again. What is happening? How could you fix this?
 
-# Exercise 2: Statistics
-1. Connect to your instance with **pgadmin** and create a database or use an existing one
-2. Create a table. Insert many records in the table using the `generate_series()` function.
-3. Check the estimated cardinality of your table with 
-
-```SELECT reltuples AS estimate FROM pg_class where relname = '<your_table>';```
-
-4. Check the collected statistics in the `pg_stats` table
-5. Run `ANALYZE <your_table>`
-6. Check again the previous queries. Try again the entire flow to see how often things are updated.
-
-## Questions
-- What is the purpose of the `ANALYZE` command?
-- What is inside `pg_stats`? How does this help for query execution?
-
-# Exercise 3: The Write-Ahead Log (WAL)
+# Exercise 2: The Write-Ahead Log (WAL)
 
 1. Connect to your instance with **pgadmin** and create a database or use an existing one
 2. Install the extension `pg_walinspect` with `CREATE EXTENSION`
@@ -39,8 +25,42 @@
 5. Interact with your table: insert a few lines for example.
 6. Note the new LSN with `SELECT pg_current_wal_lsn()`
 7. Use the `pg_get_wal_records_info()` function to get all the WAL records between the two LSNs you noted.
-8. Try different operations (insertions, deletions, updates). 
+8. Try different operations (insertions, deletions, updates) and look at the WAL content.
 
 ## Questions
 
 - Describe the output of the `pg_get_wal_records_info()` function. What information does it extract from the WAL?
+
+# Exercise 3: Transactions Isolation
+1. Create a simple table named `test` with two INT columns named `id` and `value`
+2. Open two tabs in `pgadmin`. We will cal them tab1 and tab2 from now on
+3. In tab1, run `BEGIN` to start a transaction. In this same tab, run an `INSERT` command to add a new line. Finally run a `SELECT *` from the table in both tab1 and tab2. 
+- What do you see?
+- Why is that? What is the isolation level you are using?
+4. `COMMIT` the transaction in tab1. Run again the `SELECT` in both tabs. What happened?
+5. Now in tab1 start a new transaction with `BEGIN TRANSACTION ISOLATION LEVEL REPEATABLE READ;`
+6. `SELECT` the content of the table. Go to the second tab and add a new record. Go back to the first one and `SELECT` again. 
+- What do you see?
+7. `ROLLBACK`the transaction in tab1.
+8. Finally now use `BEGIN TRANSACTION ISOLATION LEVEL SERIALIZABLE;` in tab1. Run an update on one of the lines in tab2. Now run the same exact UPDATE in tab1. What is happening?
+
+# Exercise 4: Explicit locks
+1. Create a new table of any form. Insert a few records in this table.
+2. Start a transaction in a tab with `BEGIN`. Issue a 
+```
+SELECT *
+FROM <table>
+FOR UPDATE
+```
+3. Go to a second tab. Run the following:
+```
+SELECT l.*
+FROM pg_locks l
+JOIN pg_class t ON l.relation = t.oid
+WHERE t.relkind = 'r'
+  AND t.relname = 'toto';
+```
+- What do you see? 
+4. Now in the same tab, try to modify the table, for example run an update? What happens?
+5. Go back to the first tab and `ROLLBACK` the transaction. What happened in the second tab?
+Go to https://www.postgresql.org/docs/current/explicit-locking.html to understand a bit more about what you just did.
