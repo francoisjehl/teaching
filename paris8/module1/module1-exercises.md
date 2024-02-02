@@ -44,7 +44,7 @@
 7. `ROLLBACK`the transaction in tab1.
 8. Finally now use `BEGIN TRANSACTION ISOLATION LEVEL SERIALIZABLE;` in tab1. Run an update on one of the lines in tab2. Now run the same exact UPDATE in tab1. What is happening?
 
-# Exercise 4: Explicit locks
+# Exercise 4: Explicit locking
 1. Create a new table of any form. Insert a few records in this table.
 2. Start a transaction in a tab with `BEGIN`. Issue a 
 ```
@@ -58,9 +58,10 @@ SELECT l.*
 FROM pg_locks l
 JOIN pg_class t ON l.relation = t.oid
 WHERE t.relkind = 'r'
-  AND t.relname = 'toto';
+  AND t.relname = '<table>';
 ```
 - What do you see? 
 4. Now in the same tab, try to modify the table, for example run an update? What happens?
 5. Go back to the first tab and `ROLLBACK` the transaction. What happened in the second tab?
+
 Go to https://www.postgresql.org/docs/current/explicit-locking.html to understand a bit more about what you just did.
