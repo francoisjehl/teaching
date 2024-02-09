@@ -38,7 +38,7 @@ style: |
 ---
 <!-- _class: lead -->
 # **Module 1**
-Storing Data in an ACID way
+Storing acid data
 
 ---
 # **Transaction**

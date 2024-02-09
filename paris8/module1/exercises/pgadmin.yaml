@@ -1,3 +1,24 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+ name: pgadmin-config
+data:
+ servers.json: |
+   {
+       "Servers": {
+         "1": {
+           "Name": "PostgreSQL DB",
+           "Group": "Servers",
+           "Port": 5432,
+           "Username": "postgres",
+           "Password" :"postgres",
+           "Host": "postgres-service",
+           "SSLMode": "prefer",
+           "MaintenanceDB": "postgres"
+         }
+       }
+   }
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -23,6 +44,15 @@ spec:
           value: "admin"
         ports:
         - containerPort: 80
+        volumeMounts:
+        - name: pgadmin-config
+          mountPath: /pgadmin4/servers.json
+          subPath: servers.json
+          readOnly: true
+      volumes:
+      - name: pgadmin-config
+        configMap:
+          name: pgadmin-config
 ---
 apiVersion: v1
 kind: Service

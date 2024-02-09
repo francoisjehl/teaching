@@ -82,3 +82,9 @@ GROUP BY
 ## Questions
 - What is the purpose of the `ANALYZE` command?
 - What is inside `pg_stats`? How does this help for query execution?
+
+
+# Exercice 3: B-Trees
+1. Go to https://www.cs.usfca.edu/~galles/visualization/BTree.html
+2. Insert all the numbers from the Fibonacci suite up to 144
+3. Delete 13
